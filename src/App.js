@@ -1,7 +1,7 @@
 import './index.css';
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link ,Navigate} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
 import TodoList from './components/TodoList';
@@ -17,20 +17,17 @@ const useAuthentication = () => {
     } else {
       setIsLoggedIn(false);
     }
-  }, [isLoggedIn]);
+  }, []);
 
   return isLoggedIn;
 };
 
-
 function App() {
   const isLoggedIn = useAuthentication();
 
-  const clearLocStorage = () => {
-    // Clear localStorage
+  const clearLocalStorage = () => {
     localStorage.clear();
   };
-
 
   return (
     <Router>
@@ -38,7 +35,26 @@ function App() {
         <nav>
           <span className="todo pad">TodoList</span>
           <div>
-            <Link className="pad" to="/register">
+            {isLoggedIn ? (
+              <>
+                <Link className="pad" to="/todo">
+                  Todo
+                </Link>
+                <Link className="pad" to="/login" onClick={clearLocalStorage}>
+                  Logout
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link className="pad" to="/register">
+                  Register
+                </Link>
+                <Link className="pad" to="/login">
+                  Login
+                </Link>
+              </>
+            )}
+            {/* <Link className="pad" to="/register">
               Register
             </Link>
             <Link className="pad" to="/login">
@@ -49,12 +65,11 @@ function App() {
                 <Link className="pad" to="/todo">
                   Todo
                 </Link>
-                <Link className="pad" to="/login" onClick={() => clearLocStorage() }>
+                <Link className="pad" to="/login" onClick={clearLocalStorage}>
                   Logout
                 </Link>
               </>
-              
-            )}
+            )} */}
           </div>
         </nav>
         <Routes>
@@ -63,7 +78,7 @@ function App() {
           {isLoggedIn ? (
             <Route path="/todo" element={<TodoList />} />
           ) : (
-            <Route path="/todo" element={<Navigate to="/" />} />
+            <Route path="/todo" element={<Navigate to="/login" replace />} />
           )}
         </Routes>
       </div>
