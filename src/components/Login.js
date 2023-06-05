@@ -5,10 +5,11 @@ import { useNavigate } from 'react-router-dom';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [error, setError] = useState('');
 
-  const history = useNavigate();
+  const navigate = useNavigate();
+
   const handleSubmit = async (e) => {
   e.preventDefault();
   try {
@@ -16,21 +17,22 @@ const Login = () => {
           email,
           password,
       });
-      console.log(response.data);
-      
+      console.log(response.data);      
       // Save the token in local storage
       localStorage.setItem('token', response.data.token);
-      
       //Handle success login
-      setSuccess('User Login Sucessfull')
+      setSuccess('User Login Sucessfull');
       setError('');
-      history('/todo');
+      setTimeout(()=> {
+        navigate('/todo')
+      },5000)
+      navigate('/todo');
+      // window.location.href = '/todo'; 
+
   } catch (error) {
-      
       console.error(error);
       setError('Invalid email or password');
       setSuccess('');
-
     }
   };
 
