@@ -1,10 +1,11 @@
 import './index.css';
 import './App.css';
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Link, Navigate } from 'react-router-dom';
+import { Route, Routes, Link, Navigate } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
 import TodoList from './components/TodoList';
+// import Navbar from './components/Navbar';
 
 const useAuthentication = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -17,8 +18,8 @@ const useAuthentication = () => {
     } else {
       setIsLoggedIn(false);
     }
-  }, []);
-
+  }, [isLoggedIn]);
+  console.log('isLoggedIn:', isLoggedIn);
   return isLoggedIn;
 };
 
@@ -30,7 +31,6 @@ function App() {
   };
 
   return (
-    <Router>
       <div className="App">
         <nav>
           <span className="todo pad">TodoList</span>
@@ -54,35 +54,19 @@ function App() {
                 </Link>
               </>
             )}
-            {/* <Link className="pad" to="/register">
-              Register
-            </Link>
-            <Link className="pad" to="/login">
-              Login
-            </Link>
-            {isLoggedIn && (
-              <>
-                <Link className="pad" to="/todo">
-                  Todo
-                </Link>
-                <Link className="pad" to="/login" onClick={clearLocalStorage}>
-                  Logout
-                </Link>
-              </>
-            )} */}
           </div>
         </nav>
+        {/* <Navbar /> */}
         <Routes>
-          <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login />} />
+          <Route  path="/register" exact element={<Register />} />
+          <Route  path="/login" element={<Login />} />
           {isLoggedIn ? (
-            <Route path="/todo" element={<TodoList />} />
+            <Route path="/todo" exact element={<TodoList />} />
           ) : (
-            <Route path="/todo" element={<Navigate to="/login" replace />} />
+            <Route path="/todo" element={<Navigate to="/todo" />} />
           )}
         </Routes>
       </div>
-    </Router>
   );
 }
 

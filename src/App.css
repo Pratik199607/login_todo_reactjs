@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+
 *{
     margin: 0;
     padding: 0;
@@ -29,4 +30,8 @@ nav > div{
 }
 .container{
     height: 65lvh;
+}
+
+.custom_width{
+    width: 80dvw;
 }
