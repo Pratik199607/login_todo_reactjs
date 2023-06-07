@@ -33,5 +33,6 @@ nav > div{
 }
 
 .custom_width{
-    width: 80dvw;
+    width: 40dvw;
+    height: 10dvh;
 }
