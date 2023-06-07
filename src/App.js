@@ -5,7 +5,6 @@ import { Route, Routes, Link, Navigate } from 'react-router-dom';
 import Register from './components/Register';
 import Login from './components/Login';
 import TodoList from './components/TodoList';
-// import Navbar from './components/Navbar';
 
 const useAuthentication = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -56,14 +55,14 @@ function App() {
             )}
           </div>
         </nav>
-        {/* <Navbar /> */}
+      
         <Routes>
           <Route  path="/register" exact element={<Register />} />
           <Route  path="/login" element={<Login />} />
           {isLoggedIn ? (
-            <Route path="/todo" exact element={<TodoList />} />
+            <Route path="/todo"  element={<TodoList />} />
           ) : (
-            <Route path="/todo" element={<Navigate to="/todo" />} />
+            <Route path="/login" element={<Navigate to="/login" />} />
           )}
         </Routes>
       </div>

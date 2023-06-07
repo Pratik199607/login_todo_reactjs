@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import '../index.css';
 import '../App.css';
 
@@ -8,6 +9,7 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -17,13 +19,14 @@ const Register = () => {
                 email,
                 password
             });
-            setSuccess('User registered successfully');
-            setError('')
+            setSuccess(response.data);
+            setError('');
+            navigate('/login');
             console.log(response.data);
-        } catch {
+        } catch(error) {
             console.error(error);
-            setError('Error registering user');
-            setSuccess('')
+            setError(`Error : ${error.response.data.message}`);
+            setSuccess('');
         }
     }
     return (

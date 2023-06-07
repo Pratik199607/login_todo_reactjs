@@ -4,7 +4,7 @@ import CardComponent from "./CardComponent";
 import { Button } from "flowbite-react";
 
 const TodoList = () => {
-  //State for fetching Todo
+  //State for fetching
   const [todos, setTodos] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
@@ -75,10 +75,10 @@ const TodoList = () => {
       </Button>
       {renderTodos()}
       <div>
-        <button className='mt-3 mx-2' onClick={handlePrevPage} disabled={currentPage === 1}>
+        <button className='mt-3 mx-2 w-44 h-10 rounded-3xl bg-gray-300 disabled:bg-transparent' onClick={handlePrevPage} disabled={currentPage === 1}>
           Previous Page
         </button>
-        <button className='mt-3 mx-2' onClick={handleNextPage} disabled={currentPage === totalPages}>
+        <button className='mt-3 mx-2 w-44 h-10 rounded-3xl bg-gray-300 disabled:bg-transparent' onClick={handleNextPage} disabled={currentPage === totalPages}>
           Next Page
         </button>
       </div>
