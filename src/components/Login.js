@@ -50,6 +50,7 @@ const Login = () => {
 						value={email}
 						placeholder="abc@gmail.com"
 						onChange={(e) => setEmail(e.target.value)}
+						required
 					/>
 					<p className="mt-2 invisible peer-invalid:visible text-purple-600 text-sm">
 						Please provide a valid email address.
@@ -65,6 +66,7 @@ const Login = () => {
 						value={password}
 						placeholder="dummypasswd"
 						onChange={(e) => setPassword(e.target.value)}
+						required
 					/>
 					<p className="mt-2 invisible peer-required:visible text-purple-600 text-sm">
 						Please enter a password

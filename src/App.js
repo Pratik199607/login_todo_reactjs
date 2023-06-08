@@ -6,9 +6,9 @@ import Register from './components/Register';
 import Login from './components/Login';
 import TodoList from './components/TodoList';
 
-const useAuthentication = () => {
+function App() {
+  // const isLoggedIn = useAuthentication();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
   useEffect(() => {
     const token = localStorage.getItem('token');
     console.log('Token: ', token);
@@ -17,13 +17,9 @@ const useAuthentication = () => {
     } else {
       setIsLoggedIn(false);
     }
+    console.log(isLoggedIn);
   }, [isLoggedIn]);
-  console.log('isLoggedIn:', isLoggedIn);
-  return isLoggedIn;
-};
-
-function App() {
-  const isLoggedIn = useAuthentication();
+  
 
   const clearLocalStorage = () => {
     localStorage.clear();
@@ -62,7 +58,7 @@ function App() {
           {isLoggedIn ? (
             <Route path="/todo"  element={<TodoList />} />
           ) : (
-            <Route path="/login" element={<Navigate to="/login" />} />
+            <Route path="/" element={<Navigate to="/login" />} />
           )}
         </Routes>
       </div>
