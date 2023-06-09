@@ -19,9 +19,11 @@ const Register = () => {
                 email,
                 password
             });
-            setSuccess(response.data);
+            setSuccess(response.data.message);
             setError('');
-            navigate('/login');
+            setTimeout(() => {
+                navigate('/login');
+            },2000)
             console.log(response.data);
         } catch(error) {
             console.error(error);
@@ -43,7 +45,7 @@ const Register = () => {
                 <label className='block'>
                     <span className='block text-md font-medium text-slate-700'>Password:</span>
                     <input className='peer placeholder:italic placeholder:text-slate-400 border border-s-purple-950 bg-white px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500' placeholder='dummypasswd' type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                    <p className="mt-2 invisible peer-required:visible text-purple-600 text-sm">
+                    <p className="mt-2 invisible peer-invalid:visible text-purple-600 text-sm">
                      Please enter a password
                     </p>
                 </label>

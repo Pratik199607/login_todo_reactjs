@@ -1,10 +1,11 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import CardComponent from "./CardComponent";
 import { Button } from "flowbite-react";
 
 const TodoList = () => {
   const token = localStorage.getItem('token');
+  const user = localStorage.getItem('userId');
   const [todos, setTodos] = useState([]);
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
@@ -38,9 +39,9 @@ const TodoList = () => {
     }
   };
 
-  useEffect(() => {
-    fetchTodos();
-  }, [currentPage]);
+  // useEffect(() => {
+  //   fetchTodos();
+  // }, [currentPage]);
 
   const fetchTodos = async () => {
     try {
@@ -71,6 +72,7 @@ const TodoList = () => {
 
   return (
     <div className="mx-auto container max-w-4xl text-center my-14 bg-slate-200 rounded-xl flex flex-col items-center">
+      <h2 className='mt-3'>Current User: {user} </h2>
       <input
         className="rounded-xl mt-5 max-w-screen-sm"
         type="text"
@@ -93,7 +95,7 @@ const TodoList = () => {
         <button
           className="mt-3 mx-2 w-44 h-10 rounded-3xl bg-gray-300 disabled:bg-transparent"
           onClick={handleNextPage}
-          disabled={currentPage === totalPages}
+          disabled={currentPage === totalPages || todos.length === 0}
         >
           Next Page
         </button>

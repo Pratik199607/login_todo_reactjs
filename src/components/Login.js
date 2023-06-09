@@ -22,11 +22,15 @@ const Login = ({ setIsLoggedIn }) => {
 			// Save the token in local storage
 			localStorage.setItem("token", response.data.token);
 			localStorage.setItem('userId', response.data.userId);
-			setIsLoggedIn(true);
+			
 
 			//Handle success login
-			setSuccess("User Login Sucessfull");
-			navigate("/todo");
+			setSuccess(response.data.message);
+			setTimeout(() => {
+				setIsLoggedIn(true);
+				navigate("/todo")
+			}, 2000);
+			// navigate("/todo");
 			setError("");
 			
 			// window.location.href = '/todo';
@@ -52,6 +56,7 @@ const Login = ({ setIsLoggedIn }) => {
 						placeholder="abc@gmail.com"
 						onChange={(e) => setEmail(e.target.value)}
 						required
+						pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
 					/>
 					<p className="mt-2 invisible peer-invalid:visible text-purple-600 text-sm">
 						Please provide a valid email address.
@@ -69,7 +74,7 @@ const Login = ({ setIsLoggedIn }) => {
 						onChange={(e) => setPassword(e.target.value)}
 						required
 					/>
-					<p className="mt-2 invisible peer-required:visible text-purple-600 text-sm">
+					<p className="mt-2 invisible peer-invalid:visible text-purple-600 text-sm">
 						Please enter a password
 					</p>
 				</label>
