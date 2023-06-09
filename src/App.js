@@ -7,8 +7,8 @@ import Login from './components/Login';
 import TodoList from './components/TodoList';
 
 function App() {
-  // const isLoggedIn = useAuthentication();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     console.log('Token: ', token);
@@ -19,49 +19,49 @@ function App() {
     }
     console.log(isLoggedIn);
   }, [isLoggedIn]);
-  
 
-  const clearLocalStorage = () => {
+  const handleLogout = () => {
+    setIsLoggedIn(false);
     localStorage.clear();
   };
 
   return (
-      <div className="App">
-        <nav>
-          <span className="todo pad">TodoList</span>
-          <div>
-            {isLoggedIn ? (
-              <>
-                <Link className="pad" to="/todo">
-                  Todo
-                </Link>
-                <Link className="pad" to="/login" onClick={clearLocalStorage}>
-                  Logout
-                </Link>
-              </>
-            ) : (
-              <>
-                <Link className="pad" to="/register">
-                  Register
-                </Link>
-                <Link className="pad" to="/login">
-                  Login
-                </Link>
-              </>
-            )}
-          </div>
-        </nav>
-      
-        <Routes>
-          <Route  path="/register" exact element={<Register />} />
-          <Route  path="/login" element={<Login />} />
+    <div className="App">
+      <nav>
+        <span className="todo pad">TodoList</span>
+        <div>
           {isLoggedIn ? (
-            <Route path="/todo"  element={<TodoList />} />
+            <>
+              <Link className="pad" to="/todo">
+                Todo
+              </Link>
+              <Link className="pad" to="/" onClick={handleLogout}>
+                Logout
+              </Link>
+            </>
           ) : (
-            <Route path="/" element={<Navigate to="/login" />} />
+            <>
+              <Link className="pad" to="/register">
+                Register
+              </Link>
+              <Link className="pad" to="/login">
+                Login
+              </Link>
+            </>
           )}
-        </Routes>
-      </div>
+        </div>
+      </nav>
+
+      <Routes>
+        <Route path="/register" element={<Register />} />
+        <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
+        {isLoggedIn ? (
+          <Route path="/todo" element={<TodoList />} />
+        ) : (
+          <Route path="/" element={<Navigate to="/login" />} />
+        )}
+      </Routes>
+    </div>
   );
 }
 

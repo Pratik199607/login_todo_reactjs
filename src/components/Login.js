@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-const Login = () => {
+const Login = ({ setIsLoggedIn }) => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [success, setSuccess] = useState("");
@@ -22,10 +22,11 @@ const Login = () => {
 			// Save the token in local storage
 			localStorage.setItem("token", response.data.token);
 			localStorage.setItem('userId', response.data.userId);
+			setIsLoggedIn(true);
 
 			//Handle success login
 			setSuccess("User Login Sucessfull");
-      		navigate("/todo");
+			navigate("/todo");
 			setError("");
 			
 			// window.location.href = '/todo';

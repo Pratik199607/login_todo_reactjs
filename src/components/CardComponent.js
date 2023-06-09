@@ -16,7 +16,14 @@ const CardComponent = ({ todo, onDelete }) => {
 
   const handleUpdate = async () => {
     try {
-      await axios.put(`http://localhost:5000/api/todo/${todo._id}`, { task: updatedTask });
+      const token = localStorage.getItem('token');
+      await axios.put(`http://localhost:5000/api/todo/${todo._id}`, { task: updatedTask },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       todo.task = updatedTask;
       hideUpdateModal();
     } catch (error) {
