@@ -9,7 +9,7 @@ const CardComponent = ({ todo, onDelete }) => {
   const [modalDeleteVisible, setModalDeleteVisible] = useState(false);
   const [modalUpdateVisible, setModalUpdateVisible] = useState(false);
   const [updatedTask, setUpdatedTask] = useState("");
-
+  const API_URL = process.env.REACT_APP_API_URL;
   const handleDelete = () => {
     onDelete(todo._id);
   };
@@ -17,7 +17,7 @@ const CardComponent = ({ todo, onDelete }) => {
   const handleUpdate = async () => {
     try {
       const token = localStorage.getItem('token');
-      await axios.put(`http://localhost:5000/api/todo/${todo._id}`, { task: updatedTask },
+      await axios.put(`${API_URL}/api/todo/${todo._id}`, { task: updatedTask },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -79,7 +79,7 @@ const CardComponent = ({ todo, onDelete }) => {
       >
         Are you sure you want to update this todo?
         <input
-          className="mt-3 ml-2 rounded-md"
+          className="mt-3 rounded-md w-[100%]"
           type="text"
           value={updatedTask}
           onChange={(e) => setUpdatedTask(e.target.value)}

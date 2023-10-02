@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CardComponent from "./CardComponent";
 import { Button } from "flowbite-react";
 
@@ -10,11 +10,11 @@ const TodoList = () => {
   const [totalPages, setTotalPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
   const [newTodo, setNewTodo] = useState("");
-
+  const API_URL = process.env.REACT_APP_API_URL;
   const handleCreateTodo = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/todo",
+        `${API_URL}/api/todo`,
         { task: newTodo },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -29,9 +29,9 @@ const TodoList = () => {
 
   const handleDeleteTodo = async (todoId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/todo/${todoId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      await axios.delete(`${API_URL}/api/todo/${todoId}`, {
+				headers: { Authorization: `Bearer ${token}` },
+			});
       setTodos((prevTodos) => prevTodos.filter((todo) => todo._id !== todoId));
       fetchTodos();
     } catch (error) {
@@ -39,15 +39,15 @@ const TodoList = () => {
     }
   };
 
-  // useEffect(() => {
-  //   fetchTodos();
-  // }, [currentPage]);
+  useEffect(() => {
+    fetchTodos();
+  }, [currentPage]);
 
   const fetchTodos = async () => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/todo?page=${currentPage}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(`${API_URL}/api/todo?page=${currentPage}`, {
+				headers: { Authorization: `Bearer ${token}` },
+			});
       const { todos: fetchedTodos, totalPages } = response.data;
       setTodos(fetchedTodos);
       setTotalPages(totalPages);

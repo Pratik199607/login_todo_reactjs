@@ -10,15 +10,15 @@ const Register = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const navigate = useNavigate();
-
+    const API_URL = process.env.REACT_APP_API_URL;
     const handleSubmit = async (e) => {
         e.preventDefault();
         
         try {
-            const response = await axios.post('http://localhost:5000/api/register', {
-                email,
-                password
-            });
+            const response = await axios.post(`${API_URL}/api/register`, {
+				email,
+				password,
+			});
             setSuccess(response.data.message);
             setError('');
             setTimeout(() => {
